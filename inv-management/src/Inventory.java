@@ -69,7 +69,7 @@ public class Inventory {
                 bag.get(choice).getStock());
         int v = Integer.parseInt(input.nextLine());
         if(bag.get(choice).getStock() >= v){
-            bag.get(choice).setStock(choice);
+            bag.get(choice).setStock(bag.get(choice).getStock() - v);
 
         }
         else{
@@ -80,7 +80,7 @@ public class Inventory {
     public void removeItem() {
         String choice = input.nextLine();
         for(Item item: bag){
-            if(choice == item.getName()){
+            if(choice.equalsIgnoreCase(item.getName())){
                 bag.remove(item);
             }
         }
@@ -95,7 +95,7 @@ public class Inventory {
         int choice = Integer.parseInt(input.nextLine()) - 1;
         System.out.format("what is the new price of %s? ", bag.get(choice));
         int amount = Integer.parseInt((input.nextLine()));
-        bag.get(choice).setPrice(choice);
+        bag.get(choice).setPrice(amount);
 
     }
 }

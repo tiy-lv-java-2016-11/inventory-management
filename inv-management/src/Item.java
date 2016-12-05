@@ -27,10 +27,12 @@ public class Item {
         return stock;
     }
 
-    public void setStock(int v){
+    public void setStock(int stock){
+        this.stock = stock;
 
     }
-    public void setPrice(int v){
+    public void setPrice(int price){
+        this.price = price;
 
     }
     @Override
