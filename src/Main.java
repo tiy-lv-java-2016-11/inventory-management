@@ -11,7 +11,7 @@ public class Main {
         Scanner input = new Scanner(System.in);
         HashMap<Integer, String> actions = new HashMap<>();
         Inventory inventory1 = new Inventory();
-        inventory1.display();
+
 
         actions.put(1, "Create a new item by entering its name, price and quantity");
         actions.put(2, "Let them choose how many items should be sold");
@@ -21,17 +21,18 @@ public class Main {
         actions.put(6, "Quit Program");
 
 
-        System.out.println("\nThese are the actions you can take:\n");
+        String action = "0";
+        while (!action.equals("6")) {
+            inventory1.display();
+            System.out.println("\nThese are the actions you can take:\n");
 
-        for (Map.Entry<Integer, String> entry : actions.entrySet()) {
-            int key = entry.getKey();
-            String value = entry.getValue();
-            System.out.println(key + " " + value);
-        }
-        System.out.println("What would you like to do?");
-        String action = input.nextLine();
-
-        while (action != "6") {
+            for (Map.Entry<Integer, String> entry : actions.entrySet()) {
+                int key = entry.getKey();
+                String value = entry.getValue();
+                System.out.println(key + " " + value);
+            }
+            System.out.println("What would you like to do?");
+            action = input.nextLine();
 
             if (action.equals("1")) {
                 inventory1.addNewItemToInventory();
@@ -53,16 +54,6 @@ public class Main {
             } else {
                 System.out.println("please enter a valid option");
             }
-            System.out.println("What would you like to do?");
-
-            for (Map.Entry<Integer, String> entry : actions.entrySet()) {
-                int key = entry.getKey();
-                String value = entry.getValue();
-                System.out.println(key + " " + value);
-            }
-
-            action = input.nextLine();
-
         }
     }
 
