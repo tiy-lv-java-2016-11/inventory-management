@@ -38,7 +38,7 @@ public class Inventory {
 
     private void whatYouWant(){
 
-        String str = "\n\nWhat would you like to do? < 1, 2, 3, 4, 5, or 6 >\n\n" +
+        String str = "\nWhat would you like to do? < 1, 2, 3, 4, 5, or 6 >\n\n" +
                 "1 : Print current inventory\n" +
                 "2 : Create a new inventory item\n" +
                 "3 : Delete an item from inventory\n" +
@@ -87,8 +87,17 @@ public class Inventory {
     }
 
     private void newItem() {
-
-        Item item  = new Item(inputName(), inputQuantity(), inputPrice());
+        
+        System.out.println("\nWhat is the name of the item?");
+        String name = getValidStr(this.input.nextLine());
+        
+        System.out.println("\nWhat is the quantity?");
+        int qty = getValidQty(this.input.nextLine());
+        
+        System.out.println("\nWhat is the price?");
+        double price = getValidPrice(this.input.nextLine());
+        
+        Item item  = new Item(name, qty, price);
         this.inventory.put(CURRENT_ITEM_ID, item);
         this.CURRENT_ITEM_ID++;
 
@@ -116,11 +125,13 @@ public class Inventory {
     private void sellItem(){
         Item item = getItem();
         int itemQty = item.getQuantity();
-        int qty = inputQuantity();
+        System.out.println("\nWhat is the quantity to sell?");
+        int qty = getValidQty(this.input.nextLine());
 
         while (qty > itemQty) {
             System.out.println("\nThere is not enough in stock!");
-            qty = inputQuantity();
+            System.out.println("\nWhat is the quantity to sell?");
+            qty = getValidQty(this.input.nextLine());
         }
 
         item.setQuantity(itemQty-qty);
@@ -136,7 +147,7 @@ public class Inventory {
         System.out.println("\nWhat is the sale end date? <dd/mm/yyyy>");
         item.setSaleEnd(getValidDate());
         System.out.println("\nWhat is the sale price?");
-        item.setSalePrice(inputPrice());
+        item.setSalePrice(getValidPrice(this.input.nextLine()));
 
         whatYouWant();
     }
@@ -164,14 +175,16 @@ public class Inventory {
 
     private void updatePrice(){
         Item item = getItem();
-        double price = inputPrice();
+        System.out.println("\nWhat is the new price?");
+        double price = getValidPrice(this.input.nextLine());
         item.setPrice(price);
         whatYouWant();
     }
 
     private void updateQuantity(){
         Item item = getItem();
-        int qty = inputQuantity();
+        System.out.println("\nWhat is the new quantity?");
+        int qty = getValidQty(this.input.nextLine());
         item.setQuantity(qty);
         whatYouWant();
     }
@@ -197,9 +210,8 @@ public class Inventory {
         return item;
     }
 
-    private double inputPrice(){
-        System.out.println("\nWhat is the price?");
-        double dub = getValidDouble(this.input.nextLine());
+    private double getValidPrice(String str){
+        double dub = getValidDouble(str);
         while (dub < 0){
             System.out.println("\nPlease enter a price greater than or equal to 0.");
             dub = getValidDouble(this.input.nextLine());
@@ -207,24 +219,13 @@ public class Inventory {
         return dub;
     }
 
-    private int inputQuantity(){
-        System.out.println("\nWhat is the quantity?");
-        int qty = getValidInt(this.input.nextLine());
+    private int getValidQty(String str){
+        int qty = getValidInt(str);
         while (qty < 0){
             System.out.println("\nPlease enter a quantity greater than or equal to 0.");
             qty = getValidInt(this.input.nextLine());
         }
         return qty;
-    }
-
-    private String inputName(){
-        System.out.println("\nWhat is the name of the item?");
-        String str = "";
-        while (str.isEmpty()){
-            System.out.println("\nPlease enter a name for the item?");
-            str = this.input.nextLine();
-        }
-        return str;
     }
     
     private String getValidStr(String str){
@@ -262,7 +263,7 @@ public class Inventory {
                 date = DF.parse(this.input.nextLine());
             }
             catch (ParseException e){
-                System.out.println("\nPlease enter the date in the format <dd/mm/yyyy>");
+                System.out.println("\nPlease enter a date in the format <dd/mm/yyyy>");
                 date = null;
             }
         }
