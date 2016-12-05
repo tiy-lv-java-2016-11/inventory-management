@@ -7,8 +7,10 @@ public class Main {
     public static void main(String[] args) {
 
         Inventory myFridge = new Inventory();
+        myFridge.addUser("melmo", "teddy");
+        myFridge.addUser("ginger", "tux1");
 
-        myFridge.whatYouWant();
+        myFridge.login();
 
 
     }

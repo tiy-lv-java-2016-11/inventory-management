@@ -1,3 +1,5 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -5,26 +7,53 @@ import java.util.*;
  */
 public class Inventory {
     private int CURRENT_ITEM_ID = 1000;
+    private String CURRENT_USER = null;
     private HashMap<Integer, Item> inventory = new HashMap<>();
+    private HashMap<String, String> users = new HashMap<>();
     private Scanner input = new Scanner(System.in);
+    private SimpleDateFormat DF = new SimpleDateFormat("dd/M/yyyy");
 
+    public void login(){
+        System.out.println("What is your username?");
+        String name = getValidStr(this.input.nextLine());
+        String pass = users.get(name);
+        while (pass == null){
+            System.out.println("\nThat username does not exist. Please enter a valid username.");
+            pass = users.get(name);
+        }
+        System.out.println("\nWhat is your password?");
+        String password = getValidStr(this.input.nextLine());
+        while (!pass.equals(password)){
+            System.out.println("\nPlease enter the correct password.");
+            password = getValidStr(this.input.nextLine());
+        }
+        CURRENT_USER = name;
+        System.out.format("\n<%s> is logged in.", CURRENT_USER);
+        whatYouWant();
+    }
+    
+    public void addUser(String username, String password){
+        users.put(username, password);
+    }
 
-    public void whatYouWant(){
+    private void whatYouWant(){
 
         String str = "\n\nWhat would you like to do? < 1, 2, 3, 4, 5, or 6 >\n\n" +
                 "1 : Print current inventory\n" +
                 "2 : Create a new inventory item\n" +
                 "3 : Delete an item from inventory\n" +
                 "4 : Sell an item from inventory\n" +
-                "5 : Change the price of an item\n" +
-                "6 : Change the quantity in stock of an item\n";
+                "5 : Put item on sale\n" +
+                "6 : Change the price of an item\n" +
+                "7 : Change the quantity in stock of an item\n" +
+                "8 : Exit the program";
 
         System.out.println(str);
 
-        int input = getIntInput(this.input.nextLine());
+        int input = getValidInt(this.input.nextLine());
 
         while (input < 1 || input > 6){
-            input = getIntInput(this.input.nextLine());
+            input = getValidInt(this.input.nextLine());
         }
 
         switch(input) {
@@ -41,12 +70,15 @@ public class Inventory {
                 sellItem();
                 break;
             case 5:
-                updatePrice();
+                itemOnSale();
                 break;
             case 6:
-                updateQuantity();
+                updatePrice();
                 break;
             case 7:
+                updateQuantity();
+                break;
+            case 8:
                 exit();
                 break;
         }
@@ -70,7 +102,7 @@ public class Inventory {
         int id =0;
         while (id == 0) {
             System.out.println("\nWhat is the ID of the item you would like to delete?");
-            id = getIntInput(this.input.nextLine());
+            id = getValidInt(this.input.nextLine());
             if (this.inventory.get(id) == null){
                 System.out.println("\nNo such item exists at that ID.\n");
                 id = 0;
@@ -93,6 +125,18 @@ public class Inventory {
 
         item.setQuantity(itemQty-qty);
         System.out.format("\n%d <%s> have been removed from inventory.", qty, item.getName());
+
+        whatYouWant();
+    }
+
+    private void itemOnSale(){
+        Item item = this.getItem();
+        System.out.println("\nWhat is the sale start date? <dd/mm/yyyy>");
+        item.setSaleStart(getValidDate());
+        System.out.println("\nWhat is the sale end date? <dd/mm/yyyy>");
+        item.setSaleEnd(getValidDate());
+        System.out.println("\nWhat is the sale price?");
+        item.setSalePrice(inputPrice());
 
         whatYouWant();
     }
@@ -143,7 +187,7 @@ public class Inventory {
         Item item = null;
         while (id < 0) {
             System.out.println("\nWhat is the ID of the item?");
-            id = getIntInput(this.input.nextLine());
+            id = getValidInt(this.input.nextLine());
             item = this.inventory.get(id);
             if (item == null){
                 System.out.println("\nNo such item exists at that ID.");
@@ -155,20 +199,20 @@ public class Inventory {
 
     private double inputPrice(){
         System.out.println("\nWhat is the price?");
-        double dub = getDubInput(this.input.nextLine());
+        double dub = getValidDouble(this.input.nextLine());
         while (dub < 0){
             System.out.println("\nPlease enter a price greater than or equal to 0.");
-            dub = getDubInput(this.input.nextLine());
+            dub = getValidDouble(this.input.nextLine());
         }
         return dub;
     }
 
     private int inputQuantity(){
         System.out.println("\nWhat is the quantity?");
-        int qty = getIntInput(this.input.nextLine());
+        int qty = getValidInt(this.input.nextLine());
         while (qty < 0){
             System.out.println("\nPlease enter a quantity greater than or equal to 0.");
-            qty = getIntInput(this.input.nextLine());
+            qty = getValidInt(this.input.nextLine());
         }
         return qty;
     }
@@ -182,8 +226,16 @@ public class Inventory {
         }
         return str;
     }
+    
+    private String getValidStr(String str){
+        while (str.isEmpty()){
+            System.out.println("\nPlease enter a value?");
+            str = this.input.nextLine();
+        }
+        return str;
+    }
 
-    private int getIntInput(String str) {
+    private int getValidInt(String str) {
         try {
             return Integer.parseInt(str);
         }
@@ -193,7 +245,7 @@ public class Inventory {
         }
     }
 
-    private double getDubInput(String str){
+    private double getValidDouble(String str){
         try {
             return Double.parseDouble(str);
         }
@@ -201,6 +253,20 @@ public class Inventory {
             System.out.println("\nPlease enter a valid number.");
             return -1;
         }
+    }
+
+    private Date getValidDate(){
+        Date date = null;
+        while(date == null){
+            try {
+                date = DF.parse(this.input.nextLine());
+            }
+            catch (ParseException e){
+                System.out.println("\nPlease enter the date in the format <dd/mm/yyyy>");
+                date = null;
+            }
+        }
+        return date;
     }
 
 }

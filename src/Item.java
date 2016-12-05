@@ -1,10 +1,18 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Created by melmo on 12/1/16.
  */
 public class Item {
+    private SimpleDateFormat DF = new SimpleDateFormat("dd/M/yyyy");
     private String name;
     private int quantity;
     private double price;
+    private Date saleStart = getValidDate("01/01/2000");
+    private Date saleEnd = getValidDate("01/01/2000");
+    private double salePrice;
 
     public Item(String name, int quantity, double price){
         this.name = name;
@@ -14,7 +22,7 @@ public class Item {
 
     @Override
     public String toString(){
-        String str = String.format("%-15s %5s $%.2f", "<"+this.name+">", this.quantity+" @", this.price);
+        String str = String.format("%-15s %5s $%.2f", "<"+this.name+">", this.quantity+" @", this.getPrice());
         return str;
     }
 
@@ -34,12 +42,61 @@ public class Item {
         this.quantity = qty;
     }
 
-    public double getPrice(){
-        return this.price;
+    public boolean isOnSale(){
+        try {
+            Date today = DF.parse(DF.format(new Date()));
+            return today.compareTo(this.saleStart) >= 0 && today.compareTo(this.saleEnd) <= 0;
+        }
+        catch (ParseException e){
+            return false;
+        }
+    }
+
+    public double getPrice() {
+        if (this.isOnSale()){
+            return this.salePrice;
+        }
+        else {
+            return this.price;
+        }
     }
 
     public void setPrice(double price){
         this.price = price;
     }
 
+    public Date getSaleStart() {
+        return this.saleStart;
+    }
+
+    public void setSaleStart(Date saleStart) {
+        this.saleStart = saleStart;
+    }
+
+    public Date getSaleEnd() {
+        return this.saleEnd;
+    }
+
+    public void setSaleEnd(Date saleEnd) {
+        this.saleEnd = saleEnd;
+    }
+
+    public double getSalePrice() {
+        return this.salePrice;
+    }
+
+    public void setSalePrice(double salePrice) {
+        this.salePrice = salePrice;
+    }
+
+    private Date getValidDate(String str){
+        try {
+            Date date = DF.parse(str);
+            return date;
+        }
+        catch (ParseException e){
+            return null;
+        }
+
+    }
 }
