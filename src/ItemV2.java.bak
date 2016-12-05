@@ -1,0 +1,43 @@
+import java.util.Scanner;
+
+/**
+ * Created by lbregula on 12/1/16.
+ */
+public class Item {
+    private String name;
+    private int quantity;
+    private double price;
+    private Scanner input = new Scanner(System.in);
+
+    public Item(){
+        this.name = input.nextLine();
+        this.quantity = Integer.parseInt(input.nextLine());
+        this.price = Integer.parseInt(input.nextLine());
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+
+}

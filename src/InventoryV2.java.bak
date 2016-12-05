@@ -1,0 +1,71 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+/**
+ * Created by lbregula on 12/1/16.
+ */
+public class Inventory {
+    private String action;
+    private ArrayList<String> list = new ArrayList<>();
+    private HashMap<Integer, String> actions = new HashMap<>();
+    private Scanner input = new Scanner(System.in);
+
+    public Inventory() {
+        list.add("Apples");
+        list.add("Bananas");
+        list.add("Pears");
+
+        actions.put(1, "Create a new item by entering its name, price and quantity");
+        actions.put(2, "Let them choose how many items should be sold");
+        actions.put(3, "Remove item by name");
+        actions.put(4, "Pick an item and update the quantity of that item");
+        actions.put(5, "Pick and item and update the price of the item");
+        actions.put(6, "Quit Program");
+
+
+        System.out.println("\nThese are the actions you can take:\n");
+
+        for (Map.Entry<Integer, String> entry : actions.entrySet()) {
+            int key = entry.getKey();
+            String value = entry.getValue();
+            System.out.println(key + " " + value);
+        }
+
+
+    }
+
+    public void chooseAction () throws Exception{
+            System.out.println("What would you like to do?");
+            this.action = input.nextLine();
+
+            if(this.action.equals("1")) {
+                System.out.println("Create a new Item by entering its name, price and quantity");
+                addItem();
+            }
+            else if(this.action.equals("2")){
+                System.out.println("Let them choose how many items should be sold");
+            }
+            else if(this.action.equals("3")){
+                System.out.println("Remove item by name");
+            }
+            else if(this.action.equals("4")){
+                System.out.println("Pick an item and update the quantity of that item");
+            }
+            else if(this.action.equals("5")){
+                System.out.println("Quit Program");
+            }
+            else{
+                System.out.println("Please enter a valid option");
+               chooseAction();
+            }
+
+
+        }
+        private void addItem(){
+        Item newItem = new Item();
+        }
+
+}
+
