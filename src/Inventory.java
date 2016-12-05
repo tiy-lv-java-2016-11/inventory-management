@@ -11,17 +11,16 @@ public class Inventory {
     private ArrayList<Item> Inventory = new ArrayList<>();
     private Scanner input = new Scanner(System.in);
     private Item newItem = new Item();
-
-
     public Inventory() {
-      Inventory.add(newItem);
+        Inventory.add(newItem);
     }
 
     public void itemList() {
         System.out.println("Here's what is in stock: \n" + Inventory.toString());
     }
 
-    public void choices() throws Exception {
+    public void options() throws Exception {
+
         System.out.println("What would you like to do?\n");
         System.out.println("[1] Make an Item? Add the price and stock. \n");
         System.out.println("[2] Sell an item? \n");//check if there are enough left in inventory and if not throw an exception
@@ -29,38 +28,53 @@ public class Inventory {
         System.out.println("[4] Update an items quantity? \n");
         System.out.println("[5] Update an items price? \n");
         System.out.println("[6] Quit? \n");
-        if (input.nextInt() == 1) {
-            System.out.println("Name? \n");
-            newItem.setName();
-            System.out.println("Price? \n");
-            newItem.setPrice();
-            System.out.println("Stock? \n");
-            newItem.setStock();
-            Inventory.add(newItem);
-        } else if (input == 2) {
-            System.out.println("Whats would you like to sell? \n");
-            newItem.setName();
-            System.out.println("How many? \n");
-            newItem.setStock();
-            newItem.sellItem();
-        } else if (input.nextInt() == 3) {
+        int choices = input.nextInt();
+        if (choices == 1) {
+                System.out.println("Name? \n");
+                newItem.setName();
+                System.out.println("Price? \n");
+                newItem.setPrice();
+                System.out.println("Stock? \n");
+                newItem.setStock();
+                Inventory.add(newItem);
+            } else if (choices == 2) {
+                System.out.println("Whats would you like to sell? \n");
+                newItem.setName();
+                System.out.println("How many? \n");
+                newItem.setStock();
+                newItem.sellItem();
+                Inventory.remove(newItem);
+            } else if (choices == 3) {
+                System.out.println("What would you like to remove?\n");
+                newItem.setName();
+                Inventory.remove(newItem);
+            } else if (choices == 4) {
+                System.out.println("What item would you like to update?\n");
+                newItem.setName();
+                newItem.setBackStock();
+                Inventory.add(newItem);
+            } else if (choices == 5) {
+                System.out.println("What items price would you like to change?");
+                newItem.setName();
+                newItem.setPrice();
+            } else if (choices == 6) {
+                while (choices == 6) {
+                    break;
+                }
 
-        } else if (input.nextInt() == 4) {
 
-        } else if (input.nextInt() == 5) {
-
-        } else if (input.nextInt() == 6) {
-
+            }
         }
 
-    }
-
-
-
-
-
 
     }
+
+
+
+
+
+
+
 
 
 

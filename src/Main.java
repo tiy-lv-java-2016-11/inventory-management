@@ -8,7 +8,7 @@ public class Main {
 
         Inventory list = new Inventory();
         list.itemList();
-        list.choices();
+        list.options();
 
 
 

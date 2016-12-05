@@ -9,7 +9,7 @@ public class Item {
     private String name;
     private double price;
     private int stock;
-    private int backStock;
+    private int backStock = 5;
     private Scanner userInput = new Scanner(System.in);
 
 
