@@ -10,9 +10,11 @@ public class Item {
     private double price;
     private int stock;
     private int backStock = 5;
+    private int itemId;
     private Scanner userInput = new Scanner(System.in);
 
     public Item() {
+        this.itemId = itemId++;
         this.name = getName();
         this.price = getPrice();
         this.stock = getStock();
@@ -40,6 +42,12 @@ public class Item {
     }
     public void setBackStock() {
         this.backStock = userInput.nextInt();
+    }
+    public int getId(){
+        return itemId;
+    }
+    public void chooseId(){
+
     }
     public void sellItem() throws Exception {
         if (this.getStock() > this.getBackStock())  {
