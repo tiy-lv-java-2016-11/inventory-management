@@ -19,6 +19,7 @@ public class Inventory {
         String pass = users.get(name);
         while (pass == null){
             System.out.println("\nThat username does not exist. Please enter a valid username.");
+            name = getValidStr(this.input.nextLine());
             pass = users.get(name);
         }
         System.out.println("\nWhat is your password?");
@@ -38,7 +39,7 @@ public class Inventory {
 
     private void whatYouWant(){
 
-        String str = "\nWhat would you like to do? < 1, 2, 3, 4, 5, or 6 >\n\n" +
+        String str = "\n\nWhat would you like to do? < 1, 2, 3, 4, 5, 6, 7, 8 >\n\n" +
                 "1 : Print current inventory\n" +
                 "2 : Create a new inventory item\n" +
                 "3 : Delete an item from inventory\n" +
@@ -52,7 +53,8 @@ public class Inventory {
 
         int input = getValidInt(this.input.nextLine());
 
-        while (input < 1 || input > 6){
+        while (input < 1 || input > 8){
+            System.out.println("Please enter a valid option.");
             input = getValidInt(this.input.nextLine());
         }
 
@@ -99,7 +101,7 @@ public class Inventory {
         
         Item item  = new Item(name, qty, price);
         this.inventory.put(CURRENT_ITEM_ID, item);
-        this.CURRENT_ITEM_ID++;
+        CURRENT_ITEM_ID++;
 
         System.out.format("\n%d <%s> @ %.2f has been added to inventory.\n", item.getQuantity(), item.getName(), item.getPrice());
 
