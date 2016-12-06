@@ -26,20 +26,27 @@ public class Main {
             inventory1.display();
             System.out.println("\nThese are the actions you can take:\n");
 
-            for (Map.Entry<Integer, String> entry : actions.entrySet()) {
-                int key = entry.getKey();
-                String value = entry.getValue();
-                System.out.println(key + " " + value);
+
+            for (String key : actionsHashMap.keySet()) {
+                actions action = actionsHashMap.get(key);
+                System.out.println(Integer.getInteger() + "," + String.getString());
             }
+
+//            for (Map.Entry<Integer, String> entry : actions.entrySet()) {
+//                int key = entry.getKey();
+//                String value = entry.getValue();
+//                System.out.println(key + " " + value);
+       //}
             System.out.println("What would you like to do?");
             action = input.nextLine();
 
-            if (action.equals("1")) {
+            if (action.equals("1")){
                 inventory1.addNewItemToInventory();
-
-            } else if (action.equals("2")) {
+            }
+            else if (action.equals("2")) {
                 inventory1.howManyItemsToBeSold();
-            } else if (action.equals("3")) {
+            }
+            else if (action.equals("3")) {
 
                 inventory1.removeItem();
             } else if (action.equals("4")) {

@@ -16,11 +16,9 @@ public class Inventory {
     }
 
     public void display() {
-
-        for (Map.Entry<String, Item> entry : inventoryHashMap.entrySet()) {
-            String key = entry.getKey();
-            Item value = entry.getValue();
-            System.out.println(value.getName() + ", " + value.getQuantity() + ", " + value.getPrice());
+        for (String key : inventoryHashMap.keySet()) {
+            Item item = inventoryHashMap.get(key);
+            System.out.println(item.getName()+ " ," + item.getQuantity()+ " , " +item.getPrice());
         }
     }
 
@@ -29,9 +27,9 @@ public class Inventory {
         System.out.println("Enter a name");
         String name = input.nextLine();
         System.out.println("Enter quantity");
-        int quantity = input.nextInt();
+        int quantity = Integer.parseInt(input.nextLine());
         System.out.println("Enter price");
-        double price = input.nextDouble();
+        double price = Double.parseDouble(input.nextLine());
         Item tempItem = new Item(name, quantity, price);
         inventoryHashMap.put(tempItem.getName(), tempItem);
 
@@ -41,7 +39,7 @@ public class Inventory {
         System.out.println("Which Item would you like to sell?");
         String itemName = input.nextLine();
         System.out.println("How many would you like to sell?");
-        int quantity = input.nextInt();
+        int quantity = Integer.parseInt(input.nextLine());
         Item toBeSold = inventoryHashMap.get(itemName);
         int originalQuantity = toBeSold.getQuantity();
         if (originalQuantity < quantity) {
@@ -61,7 +59,7 @@ public class Inventory {
         System.out.println("Choose an item and update the quantity of that item");
         String itemName = input.nextLine();
         System.out.println("input updated quantity");
-        int quantity = input.nextInt();
+        int quantity = Integer.parseInt(input.nextLine());
         Item item = inventoryHashMap.get(itemName);
         item.setQuantity(quantity);
 
@@ -71,11 +69,9 @@ public class Inventory {
         System.out.println("Please pick an item to update the price of");
         String itemName = input.nextLine();
         System.out.println("update the price");
-        double price = input.nextDouble();
+        double price =  Double.parseDouble(input.nextLine());
         Item item = inventoryHashMap.get(itemName);
         item.setPrice(price);
     }
-
-
 }
 
