@@ -37,7 +37,9 @@ public class InventoryManager {
                     Iterator iter = itemMap.keySet().iterator();
                     int i = 1;
                     while(iter.hasNext()) {
-                        System.out.println("   " + i + ". " + (String) iter.next());
+                        String key = (String) iter.next();
+                        Inventory iv = itemMap.get(key);
+                        System.out.println("   " + i + ". name[" + iv.getName() + "] category[" + iv.getCategory() + "]");
                         i++;
                     }
                 }
@@ -61,16 +63,17 @@ public class InventoryManager {
 
                 // this runs the create item functionality
                 if(option.equals("1")) {
-                   System.out.println("Enter comma delimiited name,price,quantity");
+                   System.out.println("Enter comma delimiited name,price,quantity,category");
                     String line = br.readLine();
                     String[] parts = line.split(",");
-                    if((parts == null) || (parts.length != 3)) {
+                    if((parts == null) || (parts.length != 4)) {
                         System.out.println("Invalid inventory");
                         continue;
                     }
                     String name = parts[0];
                     String price = parts[1];
                     String quantity = parts[2];
+                    String category = parts[3];
 
                     if(!isInteger(quantity)) {
                         System.out.println("Invalid quantity");
@@ -81,7 +84,7 @@ public class InventoryManager {
                         continue;
                     }
 
-                    Inventory inventory = new Inventory(name,Integer.parseInt(quantity),Double.parseDouble(price));
+                    Inventory inventory = createItem(name, Double.parseDouble(price), Integer.parseInt(quantity), category);
                     if(itemMap.containsKey(name)) {
                         System.out.println(name + " Already created.");
                         continue;
@@ -231,5 +234,30 @@ public class InventoryManager {
             test = false;
         }
         return test;
+    }
+
+    // Create item method based on category passed in during create item option #1.
+    private Inventory createItem(String name, double price, int quantity, String category) {
+        Inventory inventory = null;
+        if(category.equals("belt")) {
+            inventory = new Belt(name, price, quantity);
+        }
+        else if(category.equals("scarf")) {
+            inventory = new Scarf(name, price, quantity);
+        }
+        else if(category.equals("sunglass")) {
+            inventory = new Sunglass(name, price, quantity);
+        }
+        else if(category.equals("wallet")) {
+            inventory = new Wallet(name, price, quantity);
+        }
+        else if(category.equals("watch")) {
+            inventory = new Watch(name, price, quantity);
+        }
+        else {
+            System.out.printf("Invalid Category " + category);
+        }
+        return inventory;
+
     }
 }

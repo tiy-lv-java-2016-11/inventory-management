@@ -5,15 +5,17 @@ public class Inventory {
     private String name;
     private int quantity;
     private double price;
+    private String category;
 
     private Inventory() {
 
     }
 
-    public Inventory(String name, int quantity, double price) {
+    public Inventory(String name, int quantity, double price, String category) {
         this.name = name;
         this.quantity = quantity;
         this.price = price;
+        this.category = category;
     }
 
     public String getName() {
@@ -28,6 +30,10 @@ public class Inventory {
         return price;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -40,5 +46,8 @@ public class Inventory {
         this.price = price;
     }
 
+    public void setCategory(String category) {
+        this.category = category;
+    }
 }
 
